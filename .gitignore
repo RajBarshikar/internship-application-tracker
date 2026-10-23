@@ -1,7 +1,9 @@
 # Local Environment and Secrets
 config.js
 .env
+.env.*
 *.local
+.vercel
 
 # Node
 node_modules/

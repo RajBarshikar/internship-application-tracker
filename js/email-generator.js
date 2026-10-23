@@ -6,8 +6,7 @@ const GROQ_CONFIG = {
       || localStorage.getItem('shravani_groq_api_key') 
       || "";
   },
-  model: "openai/gpt-oss-120b",
-  endpoint: "https://api.groq.com/openai/v1/chat/completions"
+  model: "openai/gpt-oss-120b"
 };
 
 const EmailGenerator = {
@@ -70,10 +69,9 @@ Rules:
 
     const userPrompt = `Generate a tailored application email for the role "${role}" at "${company}".`;
 
-    const response = await fetch(GROQ_CONFIG.endpoint, {
+    const response = await fetch("/api/groq", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${GROQ_CONFIG.apiKey}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({

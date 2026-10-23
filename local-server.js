@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const { proxyGroqChat, readGroqKey } = require('./lib/groq');
 
 const PORT = process.env.PORT || 3000;
 
@@ -19,14 +20,45 @@ const MIME_TYPES = {
   '.webmanifest': 'application/manifest+json'
 };
 
-const server = http.createServer((req, res) => {
+function readJsonBody(req) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    req.on('data', (chunk) => chunks.push(chunk));
+    req.on('end', () => {
+      const raw = Buffer.concat(chunks).toString('utf8');
+      if (!raw) return resolve({});
+      try { resolve(JSON.parse(raw)); } catch (err) { reject(err); }
+    });
+    req.on('error', reject);
+  });
+}
+
+const server = http.createServer(async (req, res) => {
   // Parse URL safely
   let reqPath = req.url.split('?')[0];
+
+  if (req.method === 'POST' && reqPath === '/api/groq') {
+    try {
+      const result = await proxyGroqChat(await readJsonBody(req), readGroqKey());
+      res.writeHead(result.status, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(result.body);
+    } catch (err) {
+      res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'Invalid JSON body' }));
+    }
+    return;
+  }
+
   if (reqPath === '/' || reqPath === '') {
     reqPath = '/index.html';
   }
 
-  const safePath = path.normalize(reqPath).replace(/^(\.\.[\/\\])+/, '');
+  const safePath = path.normalize(reqPath).replace(/^([/\\])+/, '');
+  if (safePath === 'config.js' || safePath.startsWith('.env') || safePath.split(/[/\\]/).includes('..')) {
+    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('404 Not Found');
+    return;
+  }
   const filePath = path.join(__dirname, safePath);
 
   fs.stat(filePath, (err, stats) => {
@@ -51,7 +83,12 @@ const server = http.createServer((req, res) => {
 });
 
 function getLocalIpAddresses() {
-  const interfaces = os.networkInterfaces();
+  let interfaces;
+  try {
+    interfaces = os.networkInterfaces();
+  } catch (err) {
+    return [];
+  }
   const addresses = [];
   for (const name of Object.keys(interfaces)) {
     for (const iface of interfaces[name]) {
