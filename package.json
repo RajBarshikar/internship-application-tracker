@@ -1,0 +1,19 @@
+{
+  "name": "internship-application-tracker",
+  "version": "1.0.0",
+  "description": "Mobile-first Internship Application Tracker & AI Email Generator for Shravani Tilwankar",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "internship-tracker",
+    "pwa",
+    "mobile",
+    "ai-email",
+    "portfolio"
+  ],
+  "author": "Antigravity",
+  "license": "MIT"
+}

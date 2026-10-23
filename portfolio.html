@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Shravani Chetan Tilwankar — Digital Health & AMR Innovations Portfolio</title>
+  
+  <meta name="description" content="Portfolio of Shravani Chetan Tilwankar, final-year B.Pharm candidate, AMR-Guard co-developer (2nd Place Nationwide AMR Innovation Challenge), WHO GRPa and Google Prompt Engineering certified.">
+  <meta name="theme-color" content="#4f46e5">
+
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    /* Standalone Portfolio Specific Styles */
+    .portfolio-page-wrapper {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px 80px 20px;
+    }
+
+    .portfolio-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .portfolio-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .portfolio-brand-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+      color: white;
+      font-weight: 800;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .portfolio-brand-title {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .portfolio-brand-subtitle {
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    .portfolio-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-profile-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .hero-avatar-large {
+      width: 84px;
+      height: 84px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, #4f46e5 0%, #ec4899 100%);
+      color: white;
+      font-size: 32px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px auto;
+      box-shadow: 0 4px 18px rgba(79, 70, 229, 0.3);
+      position: relative;
+    }
+
+    .hero-verified-badge {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: #3b82f6;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--bg-surface);
+    }
+
+    .hero-name {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .hero-badge-tag {
+      display: inline-block;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      background-color: var(--primary-light);
+      color: var(--primary-text);
+      margin-bottom: 10px;
+    }
+
+    .hero-headline {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      max-width: 620px;
+      margin: 0 auto 18px auto;
+      line-height: 1.45;
+    }
+
+    .hero-contact-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .hero-action-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .section-title-wrap h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .section-icon-box {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background-color: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .recruiter-contact-card {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(6, 182, 212, 0.08) 100%);
+      border: 1px solid rgba(79, 70, 229, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      text-align: center;
+      margin-top: 36px;
+    }
+
+    .recruiter-contact-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .recruiter-contact-card p {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto 18px auto;
+    }
+
+    .back-tracker-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background-color: var(--bg-surface);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .back-tracker-link:hover {
+      background-color: var(--border-subtle);
+      color: var(--text-primary);
+    }
+
+    .toast-portfolio {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+      background-color: #0f172a;
+      color: white;
+      padding: 10px 18px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    [data-theme="dark"] .toast-portfolio {
+      background-color: #1e293b;
+      border: 1px solid #334155;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="portfolio-page-wrapper">
+
+    <!-- Top Navigation Bar -->
+    <nav class="portfolio-nav-bar" aria-label="Portfolio Navigation">
+      <a href="./portfolio.html" class="portfolio-brand">
+        <div class="portfolio-brand-avatar">ST</div>
+        <div>
+          <div class="portfolio-brand-title">Shravani Chetan Tilwankar</div>
+          <div class="portfolio-brand-subtitle">Digital Health & AMR Innovations</div>
+        </div>
+      </a>
+
+      <div class="portfolio-nav-actions">
+        <!-- Back to Tracker Link -->
+        <a href="./index.html" class="back-tracker-link" title="Open Application Tracker">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span>Tracker</span>
+        </a>
+
+        <!-- Share Portfolio Button -->
+        <button id="btn-share-portfolio" class="btn btn-primary btn-sm" onclick="sharePortfolio()">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+          <span>Share Portfolio</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle-btn" class="btn-icon-header" title="Toggle Light / Dark Theme" aria-label="Toggle Theme">
+          <svg class="theme-icon-light" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="theme-icon-dark" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero Profile Section -->
+    <header class="hero-profile-card">
+      <div class="hero-avatar-large">
+        <span>ST</span>
+        <div class="hero-verified-badge" title="Verified Candidate">
+          <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="hero-name">Shravani Chetan Tilwankar</h1>
+      <div class="hero-badge-tag">B.Pharm Final-Year Candidate • Expected Graduation 2027</div>
+      <p class="hero-headline">Digital Health & AMR Innovations | Product & Technical Research</p>
+
+      <!-- Contact Strip -->
+      <div class="hero-contact-strip">
+        <a href="mailto:shravanitilwankar2005@gmail.com" class="pf-contact-pill">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <span>shravanitilwankar2005@gmail.com</span>
+        </a>
+
+        <a href="tel:+919265230327" class="pf-contact-pill">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          <span>+91 9265230327</span>
+        </a>
+
+        <a href="https://www.linkedin.com/in/shravani-chetan-tilwankar-35604730a" target="_blank" rel="noopener noreferrer" class="pf-contact-pill">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+            <rect x="2" y="9" width="4" height="12"></rect>
+            <circle cx="4" cy="4" r="2"></circle>
+          </svg>
+          <span>LinkedIn Profile</span>
+        </a>
+
+        <span class="pf-contact-pill">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span>Nashik, Maharashtra, India</span>
+        </span>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="hero-action-strip">
+        <button class="btn btn-outline-primary btn-sm" onclick="copyPortfolioBio()">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span>Copy Bio</span>
+        </button>
+
+        <button class="btn btn-outline-primary btn-sm" onclick="window.print()">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          <span>Print / Save PDF</span>
+        </button>
+
+        <a href="mailto:shravanitilwankar2005@gmail.com?subject=Internship%20Inquiry%20for%20Shravani%20Tilwankar" class="btn btn-primary btn-sm">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <span>Contact Shravani</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Structured Sections -->
+    <main>
+
+      <!-- Section 1: Executive Profile -->
+      <section class="pf-card">
+        <div class="section-title-wrap">
+          <div class="section-icon-box">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <h2>Executive Profile & Objective</h2>
+        </div>
+        <p class="pf-summary-text">
+          Final-year Bachelor of Pharmacy (B.Pharm) candidate with proven hands-on experience in digital health interventions, antimicrobial resistance (AMR), and public health communication. Recognized by CHRI, PATH, and GSK (2nd Place, National Innovation Challenge) for co-developing AMR-Guard, a digital web platform addressing household antimicrobial waste disposal. Certified in WHO Good Reliance Practices and Google Prompt Engineering. Completed a year-long active tenure with the Indian Pharmaceutical Association – Students’ Forum (IPA-SF), leading community health campaigns, event logistics, and public health communication. Seeking internship opportunities in Digital Health, AMR surveillance initiatives, product documentation, and digital public health research.
+        </p>
+      </section>
+
+      <!-- Section 2: Key National Honor -->
+      <section class="pf-card pf-highlight-card">
+        <div class="pf-highlight-banner">
+          <div class="section-icon-box" style="background: rgba(245, 158, 11, 0.15); color: var(--color-yellow);">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2">
+              <circle cx="12" cy="8" r="7"></circle>
+              <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+            </svg>
+          </div>
+          <div>
+            <h4>National Award: 2nd Place Nationwide</h4>
+            <p>AMR Innovation Challenge — Organized by <strong>CHRI</strong>, <strong>PATH</strong>, and <strong>GlaxoSmithKline (GSK)</strong></p>
+          </div>
+        </div>
+        <p class="pf-card-note">
+          Awarded for co-developing <strong>AMR-Guard</strong>, an AI-informed digital web platform enabling structured household antimicrobial waste disposal and environmental AMR containment.
+        </p>
+      </section>
+
+      <!-- Section 3: Research & Product Experience -->
+      <section class="pf-card">
+        <div class="section-title-wrap">
+          <div class="section-icon-box">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+          </div>
+          <h2>Product Research & Content Contribution</h2>
+        </div>
+        <div class="pf-timeline">
+          <div class="pf-timeline-item">
+            <div class="pf-item-title-wrap">
+              <h4>Product Research & Content Contributor — <em>AMR-Guard</em></h4>
+              <span class="pf-item-period">2026 – Present | Remote</span>
+            </div>
+            <div class="pf-item-company">Nexus T-Gen Intelligence Lab</div>
+            <ul class="pf-item-bullets">
+              <li>Researched, conceptualized, and contributed functional workflows for AMR-Guard, an AI-informed digital web platform enabling structured household antimicrobial waste disposal and environmental AMR containment.</li>
+              <li>Won 2nd Place nationwide at the AMR Innovation Challenge organized by CHRI, PATH, and GSK.</li>
+              <li>Conducted structured literature reviews on antimicrobial stewardship, environmental hazards of pharmaceutical waste, and medicine return protocols.</li>
+              <li>Designed user-facing educational assets, infographics, and LinkedIn carousels to translate complex microbiological and AMR data for general audiences.</li>
+              <li>Leveraged AI prompt engineering to streamline scientific literature synthesis and evidence extraction.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Leadership & Outreach Experience -->
+      <section class="pf-card">
+        <div class="section-title-wrap">
+          <div class="section-icon-box">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h2>Leadership & Organizational Experience</h2>
+        </div>
+        <div class="pf-timeline">
+          <div class="pf-timeline-item">
+            <div class="pf-item-title-wrap">
+              <h4>Active Member (1-Year Tenure)</h4>
+              <span class="pf-item-period">Maharashtra Chapter</span>
+            </div>
+            <div class="pf-item-company">Indian Pharmaceutical Association – Students’ Forum (IPA-SF)</div>
+            <ul class="pf-item-bullets">
+              <li>Completed a year-long active membership tenure driving student-led public health outreach, patient counseling camps, and awareness initiatives focused on rational medicine use and antibiotic stewardship.</li>
+              <li>Managed end-to-end event operations, scheduling, speaker coordination, and student volunteer teams for state- and college-level pharmacy seminars and health workshops.</li>
+              <li>Spearheaded campaign communications, authoring educational briefs, digital health explainers, and outreach materials to enhance community health literacy.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Certifications & Accreditations -->
+      <section class="pf-card">
+        <div class="section-title-wrap">
+          <div class="section-icon-box">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <h2>Certifications & Accreditations</h2>
+        </div>
+        <div class="pf-cert-grid">
+          <div class="pf-cert-card">
+            <div class="pf-cert-title">AMR-Guard Web Platform</div>
+            <div class="pf-cert-issuer">CHRI, PATH & GSK Innovation Challenge (2nd Place Nationwide)</div>
+            <div class="pf-cert-desc">Digital health solution designed to mitigate AMR through organized pharmaceutical return mechanisms and consumer education.</div>
+          </div>
+
+          <div class="pf-cert-card">
+            <div class="pf-cert-title">WHO Good Reliance Practices (GRPa)</div>
+            <div class="pf-cert-issuer">World Health Organization (WHO)</div>
+            <div class="pf-cert-desc">Regulatory reliance, quality standards, and modern pharmaceutical oversight frameworks.</div>
+          </div>
+
+          <div class="pf-cert-card">
+            <div class="pf-cert-title">Google Prompt Engineering Certification</div>
+            <div class="pf-cert-issuer">Google</div>
+            <div class="pf-cert-desc">Advanced generative AI workflows, prompt optimization, and structured scientific literature synthesis.</div>
+          </div>
+
+          <div class="pf-cert-card">
+            <div class="pf-cert-title">IPA-SF Active Membership Certification</div>
+            <div class="pf-cert-issuer">Indian Pharmaceutical Association – Students’ Forum</div>
+            <div class="pf-cert-desc">Recognized for 1-year active service in student-led health advocacy & public operations.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Competencies & Skills Matrix -->
+      <section class="pf-card">
+        <div class="section-title-wrap">
+          <div class="section-icon-box">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
+          </div>
+          <h2>Competencies & Skills Matrix</h2>
+        </div>
+        <div class="pf-skills-section">
+          <div class="pf-skill-group">
+            <h5>Domain Knowledge</h5>
+            <div class="pf-pills-wrap">
+              <span class="pf-pill domain-pill">Antimicrobial Resistance (AMR)</span>
+              <span class="pf-pill domain-pill">Antimicrobial Stewardship</span>
+              <span class="pf-pill domain-pill">Pharmaceutical & Biomedical Waste</span>
+              <span class="pf-pill domain-pill">Medicine Safety</span>
+              <span class="pf-pill domain-pill">WHO Good Reliance Practices (GRPa)</span>
+            </div>
+          </div>
+
+          <div class="pf-skill-group">
+            <h5>Research & Product Strategy</h5>
+            <div class="pf-pills-wrap">
+              <span class="pf-pill research-pill">Secondary Literature Review</span>
+              <span class="pf-pill research-pill">Evidence Synthesis</span>
+              <span class="pf-pill research-pill">Reference & Citation Management</span>
+              <span class="pf-pill research-pill">User Journey Mapping</span>
+              <span class="pf-pill research-pill">Functional Product Workflows</span>
+            </div>
+          </div>
+
+          <div class="pf-skill-group">
+            <h5>Technical Tools & AI</h5>
+            <div class="pf-pills-wrap">
+              <span class="pf-pill tech-pill">AI Prompt Engineering</span>
+              <span class="pf-pill tech-pill">Google Workspace</span>
+              <span class="pf-pill tech-pill">MS Office (Word, PowerPoint, Excel)</span>
+              <span class="pf-pill tech-pill">Canva</span>
+              <span class="pf-pill tech-pill">Digital Health Asset Creation</span>
+            </div>
+          </div>
+
+          <div class="pf-skill-group">
+            <h5>Leadership & Public Health</h5>
+            <div class="pf-pills-wrap">
+              <span class="pf-pill lead-pill">Public Health Communication</span>
+              <span class="pf-pill lead-pill">Cross-Functional Team Coordination</span>
+              <span class="pf-pill lead-pill">Event Operations & Logistics</span>
+              <span class="pf-pill lead-pill">Campaign Planning & Outreach</span>
+            </div>
+          </div>
+
+          <div class="pf-skill-group">
+            <h5>Languages</h5>
+            <div class="pf-pills-wrap">
+              <span class="pf-pill lang-pill">English (Fluent / Professional)</span>
+              <span class="pf-pill lang-pill">Marathi (Native)</span>
+              <span class="pf-pill lang-pill">Hindi (Fluent)</span>
+              <span class="pf-pill lang-pill">Telugu (Conversational)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 7: Education -->
+      <section class="pf-card">
+        <div class="section-title-wrap">
+          <div class="section-icon-box">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
+            </svg>
+          </div>
+          <h2>Academic Education</h2>
+        </div>
+        <div class="pf-edu-item">
+          <div class="pf-item-title-wrap">
+            <h4>Bachelor of Pharmacy (B.Pharm) — Final-Year Candidate</h4>
+            <span class="pf-item-period">Expected Graduation: 2027</span>
+          </div>
+          <div class="pf-item-company">MVP Samaj's College of Pharmacy, Nashik, Maharashtra</div>
+          <p class="pf-edu-note">Specialized coursework in pharmacology, pharmacovigilance, drug regulatory compliance, and community health interventions.</p>
+        </div>
+      </section>
+
+      <!-- Section 8: Recruiter Contact Card -->
+      <section class="recruiter-contact-card">
+        <h3>Available for Internships & Research Collaborations</h3>
+        <p>Seeking part-time or project-based internships in Digital Health Interventions, AMR Surveillance, Product Documentation, and Public Health Research.</p>
+        <div class="hero-action-strip">
+          <a href="mailto:shravanitilwankar2005@gmail.com" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>Email Shravani</span>
+          </a>
+
+          <a href="https://www.linkedin.com/in/shravani-chetan-tilwankar-35604730a" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+            <span>Connect on LinkedIn</span>
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <div id="toast-portfolio" class="toast-portfolio hidden"></div>
+
+  <script>
+    // Theme setup
+    const savedTheme = localStorage.getItem('shravani_intern_theme_v1') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    document.getElementById('theme-toggle-btn').addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('shravani_intern_theme_v1', next);
+    });
+
+    function showPortfolioToast(msg) {
+      const t = document.getElementById('toast-portfolio');
+      t.textContent = msg;
+      t.classList.remove('hidden');
+      setTimeout(() => t.classList.add('hidden'), 2600);
+    }
+
+    function sharePortfolio() {
+      const shareData = {
+        title: "Shravani Chetan Tilwankar — Portfolio",
+        text: "Portfolio of Shravani Chetan Tilwankar | B.Pharm Candidate | Digital Health & AMR Innovations",
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          showPortfolioToast("Portfolio link copied to clipboard");
+        });
+      }
+    }
+
+    function copyPortfolioBio() {
+      const bio = "Final-year Bachelor of Pharmacy (B.Pharm) candidate with proven hands-on experience in digital health interventions, antimicrobial resistance (AMR), and public health communication. Recognized by CHRI, PATH, and GSK (2nd Place, National Innovation Challenge) for co-developing AMR-Guard, a digital web platform addressing household antimicrobial waste disposal. Certified in WHO Good Reliance Practices and Google Prompt Engineering. Completed a year-long active tenure with the Indian Pharmaceutical Association – Students’ Forum (IPA-SF), leading community health campaigns, event logistics, and public health communication. Seeking internship opportunities in Digital Health, AMR surveillance initiatives, product documentation, and digital public health research.";
+      navigator.clipboard.writeText(bio).then(() => {
+        showPortfolioToast("Executive bio copied to clipboard");
+      });
+    }
+  </script>
+</body>
+</html>

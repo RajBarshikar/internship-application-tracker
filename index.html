@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>InternTrack - Application Tracker & AI Email</title>
+  
+  <!-- PWA & Mobile Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='800' font-size='42' fill='white'>ST</text><circle cx='80' cy='20' r='10' fill='%2310b981'/></svg>">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-wrap">
+        <div class="brand-icon-box" title="InternTrack">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2.2">
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+            <path d="M9 14l2 2 4-4"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>InternTrack</h1>
+          <span>Shravani Tilwankar</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Light / Dark Theme Toggle Button -->
+        <button id="theme-toggle-btn" class="btn-icon-header" title="Toggle Light / Dark Theme" aria-label="Toggle Theme">
+          <!-- Sun icon for Dark mode -->
+          <svg class="theme-icon-light" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <!-- Moon icon for Light mode -->
+          <svg class="theme-icon-dark" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Top Right Profile Icon (Opens Shravani's Portfolio Website) -->
+        <button id="top-profile-btn" class="btn-profile-avatar" title="View Shravani's CV Portfolio Website" aria-label="Profile Portfolio">
+          <span>ST</span>
+          <span class="avatar-badge-dot" title="Active Candidate"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main App Content -->
+  <main class="app-container">
+
+    <!-- ======================================================================
+         TAB 1: Applications (Saved Lists Section - Left of "+")
+         ====================================================================== -->
+    <section id="tab-view-applications" class="tab-view">
+      
+      <!-- Quick Status Ribbon -->
+      <div class="stats-ribbon">
+        <div class="stat-chip stat-chip-total">
+          <div class="stat-num" id="stat-total">0</div>
+          <div class="stat-lbl">Applied</div>
+        </div>
+        <div class="stat-chip stat-chip-high">
+          <div class="stat-num" id="stat-high">0</div>
+          <div class="stat-lbl">High (Green)</div>
+        </div>
+        <div class="stat-chip stat-chip-med">
+          <div class="stat-num" id="stat-med">0</div>
+          <div class="stat-lbl">Med (Yellow)</div>
+        </div>
+        <div class="stat-chip stat-chip-low">
+          <div class="stat-num" id="stat-low">0</div>
+          <div class="stat-lbl">Low (Red)</div>
+        </div>
+      </div>
+
+      <!-- Search & Filters Toolbar -->
+      <div class="search-filter-section">
+        <div class="search-input-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="search-input" class="search-input" aria-label="Search applications">
+        </div>
+
+        <div class="filter-row">
+          <!-- Possibility Filters -->
+          <div class="filter-chips">
+            <button class="filter-chip active" data-possibility="all">All</button>
+            <button class="filter-chip" data-possibility="high">
+              <span class="chip-dot" style="background: var(--color-green);"></span> High
+            </button>
+            <button class="filter-chip" data-possibility="medium">
+              <span class="chip-dot" style="background: var(--color-yellow);"></span> Medium
+            </button>
+            <button class="filter-chip" data-possibility="low">
+              <span class="chip-dot" style="background: var(--color-red);"></span> Low
+            </button>
+          </div>
+
+          <!-- Sort dropdown (days & hours since application) -->
+          <div class="sort-select-wrap">
+            <select id="sort-select" class="sort-select" aria-label="Sort applications">
+              <option value="time_newest">Days since application: Newest first</option>
+              <option value="time_oldest">Days since application: Oldest first</option>
+              <option value="possibility_high">Possibility: High to Low</option>
+              <option value="possibility_low">Possibility: Low to High</option>
+              <option value="company_asc">Company: A to Z</option>
+            </select>
+            <svg class="sort-select-arrow" viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Applications Cards Container -->
+      <div id="applications-list" class="applications-list-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="empty-state hidden">
+        <div class="empty-state-icon">
+          <svg viewBox="0 0 24 24" width="36" height="36" stroke="currentColor" fill="none" stroke-width="1.8" style="color: var(--text-muted); margin: 0 auto;">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </div>
+        <h3>No Applications Tracked</h3>
+        <p id="empty-state-message">Use the add button below to track where you have applied.</p>
+        <button class="btn btn-primary btn-sm" onclick="openAddAppModal()">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Add Application</span>
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ======================================================================
+         TAB 2: AI-Powered Email Generation Section (Right of "+")
+         ====================================================================== -->
+    <section id="tab-view-email" class="tab-view hidden">
+      <div class="email-view-container">
+
+        <!-- Input Form -->
+        <div class="ai-input-form-card">
+          <div class="form-group">
+            <label class="form-label" for="ai-role-input">Job Role Applying For *</label>
+            <input type="text" id="ai-role-input" class="form-input" aria-label="Job Role">
+            <div class="quick-chips-row" id="ai-role-chips">
+              <!-- Suggestion chips injected dynamically -->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="ai-company-input">Company or Organization (Optional)</label>
+            <input type="text" id="ai-company-input" class="form-input" aria-label="Company or Organization">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="ai-recruiter-input">Hiring Manager or Contact Name (Optional)</label>
+            <input type="text" id="ai-recruiter-input" class="form-input" aria-label="Hiring Manager or Contact Name">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="ai-tone-select">Email Goal & Angle</label>
+            <select id="ai-tone-select" class="form-select">
+              <option value="high_impact">High-Impact Cold Outreach (Highlight AMR-Guard & Award)</option>
+              <option value="research_amr">Research & AMR Focus (Literature Reviews & Stewardship)</option>
+              <option value="digital_health">Digital Health & Product (User Workflows & AI)</option>
+              <option value="concise_inmail">Concise LinkedIn InMail (150-word pitch)</option>
+              <option value="follow_up">Polite Follow-Up (Status check on application)</option>
+            </select>
+          </div>
+
+          <button id="btn-generate-ai-email" class="btn btn-primary btn-full">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+            <span>Generate Tailored Email</span>
+          </button>
+        </div>
+
+        <!-- Loading State -->
+        <div id="ai-loading" class="empty-state hidden">
+          <div class="empty-state-icon">
+            <svg viewBox="0 0 24 24" width="36" height="36" stroke="currentColor" fill="none" stroke-width="1.8" style="color: var(--primary); margin: 0 auto;">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <h3>Generating Tailored Email</h3>
+          <p>Analyzing Shravani's CV credentials, AMR-Guard project, and certifications for this role.</p>
+        </div>
+
+        <!-- Placeholder when empty -->
+        <div id="ai-placeholder" class="empty-state">
+          <div class="empty-state-icon">
+            <svg viewBox="0 0 24 24" width="36" height="36" stroke="currentColor" fill="none" stroke-width="1.8" style="color: var(--text-muted); margin: 0 auto;">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </div>
+          <h3>Ready to Draft</h3>
+          <p>Specify a target role above or choose an application to generate a personalized outreach email.</p>
+        </div>
+
+        <!-- Generated Result Box -->
+        <div id="ai-result-container" class="ai-result-box hidden">
+          <div class="ai-result-header">
+            <h3>Generated Email Draft</h3>
+            <span id="email-role-badge" class="ai-role-badge">Role</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Pick Subject Line:</label>
+            <div id="email-subjects-list" class="subject-choices-container">
+              <!-- Choices rendered here -->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Body (Editable):</label>
+            <textarea id="email-body-text" class="email-body-textarea"></textarea>
+          </div>
+
+          <div class="email-actions-row">
+            <button id="btn-copy-email" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy Subject & Body</span>
+            </button>
+
+            <button id="btn-mail-app" class="btn btn-secondary">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <span>Open in Gmail / Mail</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================================
+       Bottom Navigation Bar
+       ====================================================================== -->
+  <nav class="bottom-nav-bar" aria-label="Main Navigation">
+    <div class="bottom-nav-inner">
+      
+      <!-- Left Tab: Applications (Saved Lists Section) -->
+      <button id="nav-btn-applications" class="bottom-nav-item active" aria-label="Applications list">
+        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2">
+          <line x1="8" y1="6" x2="21" y2="6"></line>
+          <line x1="8" y1="12" x2="21" y2="12"></line>
+          <line x1="8" y1="18" x2="21" y2="18"></line>
+          <line x1="3" y1="6" x2="3.01" y2="6"></line>
+          <line x1="3" y1="12" x2="3.01" y2="12"></line>
+          <line x1="3" y1="18" x2="3.01" y2="18"></line>
+        </svg>
+        <span>Applications</span>
+      </button>
+
+      <!-- Center Floating Button: "+" (Add Application) -->
+      <div class="bottom-nav-center">
+        <button id="nav-btn-add" class="btn-center-add" title="Add Application Entry" aria-label="Add Application">
+          <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" fill="none" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Right Tab: AI-Powered Email Generation -->
+      <button id="nav-btn-email" class="bottom-nav-item" aria-label="AI Email Generator">
+        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          <path d="M8 9h8"></path>
+          <path d="M8 13h6"></path>
+        </svg>
+        <span>AI Email</span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- ======================================================================
+       MODAL 1: Add / Edit Application Form
+       ====================================================================== -->
+  <div id="app-form-modal" class="modal">
+    <div id="modal-backdrop" class="modal-backdrop"></div>
+    <div class="modal-wrapper">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="form-modal-title">Add Application</h3>
+          <button id="modal-close-btn" class="btn-modal-close" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <form id="app-form" class="modal-body">
+          <!-- 1. Company Name -->
+          <div class="form-group">
+            <label class="form-label" for="form-company">Company Name *</label>
+            <input type="text" id="form-company" class="form-input" aria-label="Company Name" required>
+            <div class="quick-chips-row" id="company-suggestions">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+
+          <!-- 2. Job Role -->
+          <div class="form-group">
+            <label class="form-label" for="form-role">Job Role *</label>
+            <input type="text" id="form-role" class="form-input" aria-label="Job Role" required>
+            <div class="quick-chips-row" id="role-suggestions">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+
+          <!-- 3. Date of Application -->
+          <div class="form-group">
+            <label class="form-label" for="form-app-date">Date & Time of Application *</label>
+            <input type="datetime-local" id="form-app-date" class="form-input" required>
+          </div>
+
+          <!-- 4. Possibility? High, Medium, Low (Denoted in colours: Green, Yellow, Red) -->
+          <div class="form-group">
+            <label class="form-label">Possibility *</label>
+            <div class="possibility-select-group">
+              <!-- High -> Green -->
+              <label class="possibility-select-option opt-high selected">
+                <input type="radio" name="possibility" value="high" checked>
+                <span class="possibility-badge-preview"></span>
+                <span class="opt-label">High</span>
+              </label>
+
+              <!-- Medium -> Yellow -->
+              <label class="possibility-select-option opt-med">
+                <input type="radio" name="possibility" value="medium">
+                <span class="possibility-badge-preview"></span>
+                <span class="opt-label">Medium</span>
+              </label>
+
+              <!-- Low -> Red -->
+              <label class="possibility-select-option opt-low">
+                <input type="radio" name="possibility" value="low">
+                <span class="possibility-badge-preview"></span>
+                <span class="opt-label">Low</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Extra Helpful Fields -->
+          <div class="form-group">
+            <label class="form-label" for="form-app-status">Current Status</label>
+            <select id="form-app-status" class="form-select">
+              <option value="applied">Applied</option>
+              <option value="interviewing">Interviewing</option>
+              <option value="offered">Offer Received</option>
+              <option value="rejected">Rejected</option>
+              <option value="withdrawn">Withdrawn</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="form-notes">Notes / Follow-up Details (Optional)</label>
+            <textarea id="form-notes" class="form-textarea" rows="2" aria-label="Notes"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="form-link">Job Link / Portal URL (Optional)</label>
+            <input type="url" id="form-link" class="form-input" aria-label="Job Link">
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeAppModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Application</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       MODAL 2: Portfolio Website View (Opened from Top Right Profile Icon)
+       ====================================================================== -->
+  <div id="portfolio-modal" class="modal portfolio-modal">
+    <div id="portfolio-modal-backdrop" class="modal-backdrop"></div>
+    <div class="modal-wrapper">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <h3>Portfolio & Credentials</h3>
+            <a href="./portfolio.html" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" title="Open full website in new tab">
+              <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              <span>Full Website</span>
+            </a>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <button class="btn btn-primary btn-sm" onclick="sharePortfolioFromApp()" title="Share portfolio link with recruiters">
+              <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+              <span>Share</span>
+            </button>
+            <button id="portfolio-close-btn" class="btn-modal-close" aria-label="Close portfolio">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div id="portfolio-content-body" class="modal-body">
+          <!-- Injected dynamically by renderPortfolioContent() in app.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- App Scripts -->
+  <script src="./config.js"></script>
+  <script src="./js/data.js"></script>
+  <script src="./js/email-generator.js"></script>
+  <script src="./js/app.js"></script>
+
+  <!-- Service Worker Registration for PWA / Mobile Install -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
