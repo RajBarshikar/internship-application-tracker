@@ -261,7 +261,7 @@ function renderApplicationsList() {
     const status = app.status || 'applied';
 
     return `
-      <div class="app-card ${possibilityConfig.colorClass}" data-id="${app.id}">
+      <div class="app-card ${possibilityConfig.colorClass}${status === 'rejected' ? ' is-rejected' : ''}" data-id="${app.id}">
         <div class="app-card-header">
           <div class="app-card-title-wrap">
             <h3 class="app-card-company">${escapeHtml(app.company)}</h3>
@@ -309,6 +309,13 @@ function renderApplicationsList() {
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
             </svg>
             <span>Edit</span>
+          </button>
+
+          <button class="btn-card-action btn-reject${status === 'rejected' ? ' is-on' : ''}" onclick="markRejected('${app.id}')" title="${status === 'rejected' ? 'Clear rejection' : 'Mark as rejected'}" aria-label="Mark as rejected" aria-pressed="${status === 'rejected'}">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
           </button>
 
           <button class="btn-card-action text-danger" onclick="deleteApplication('${app.id}')" title="Delete application">
@@ -531,6 +538,22 @@ function handleSaveAppForm(e) {
 
   state.saveApplications();
   closeAppModal();
+  renderApplicationsList();
+}
+
+function markRejected(appId) {
+  const app = state.applications.find(a => a.id === appId);
+  if (!app) return;
+  if (app.status === 'rejected') {
+    app.status = app.statusBeforeReject || 'applied';
+    delete app.statusBeforeReject;
+    showToast(`Cleared rejection for ${app.company}`, 'info');
+  } else {
+    app.statusBeforeReject = app.status || 'applied';
+    app.status = 'rejected';
+    showToast(`${app.company} marked as rejected`, 'info');
+  }
+  state.saveApplications();
   renderApplicationsList();
 }
 

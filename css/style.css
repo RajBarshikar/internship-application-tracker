@@ -473,6 +473,15 @@ input, select, textarea {
   background-color: var(--color-red);
 }
 
+.app-card.is-rejected::before {
+  background-color: var(--color-red);
+}
+
+.app-card.is-rejected .app-card-company {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
 .app-card:hover {
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
@@ -633,6 +642,19 @@ input, select, textarea {
 .btn-card-action.btn-tailor-email:hover {
   background-color: var(--primary);
   color: white;
+}
+
+.btn-card-action.btn-reject {
+  width: 32px;
+  padding: 0;
+  justify-content: center;
+  color: white;
+  background-color: var(--color-red);
+  border-color: var(--color-red);
+}
+
+.btn-card-action.btn-reject.is-on {
+  box-shadow: inset 0 0 0 2px white;
 }
 
 .btn-card-action.text-danger:hover {
