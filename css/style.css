@@ -1653,11 +1653,33 @@ input, select, textarea {
 
 .hug-caption {
   margin: 0;
+  max-width: 16em;
   color: #fde68a;
-  font-size: 20px;
-  font-weight: 650;
+  font-family: "Cormorant Garamond", "Iowan Old Style", Palatino, Georgia, serif;
+  font-size: 34px;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.2;
   text-align: center;
   text-shadow: 0 0 18px rgba(253, 230, 138, 0.45);
+  cursor: pointer;
+}
+
+.hug-caption.is-in {
+  animation: hugLineIn 1.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hugLineIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
 }
 
 .hug-close {

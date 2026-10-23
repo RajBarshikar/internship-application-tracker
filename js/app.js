@@ -1024,24 +1024,42 @@ function nextChestHold(track, sample, now) {
 
 let hugListen = null;
 let hugTrack = null;
+let hugPulse = null;
+
+function leftChest(rest, sample) {
+  return Math.hypot(sample.x - rest.x, sample.y - rest.y, sample.z - rest.z) > 4.5;
+}
 
 function stopHugWatch() {
   if (hugListen) {
     window.removeEventListener('devicemotion', hugListen);
     hugListen = null;
   }
+  if (hugPulse) {
+    clearInterval(hugPulse);
+    hugPulse = null;
+  }
   hugTrack = null;
   if (navigator.vibrate) navigator.vibrate(0);
   document.getElementById('hug-button')?.classList.remove('is-beating');
 }
 
+function showHugLine(text, animate) {
+  const caption = document.getElementById('hug-caption');
+  if (!caption) return;
+  caption.classList.remove('is-in');
+  caption.textContent = text;
+  if (!animate) return;
+  void caption.offsetWidth;
+  caption.classList.add('is-in');
+}
+
 function openHugSky() {
   const sky = document.getElementById('hug-sky');
   const flies = document.getElementById('hug-fireflies');
-  const caption = document.getElementById('hug-caption');
   if (!sky || !flies) return;
   stopHugWatch();
-  caption.textContent = 'Get a hug from Raj';
+  showHugLine('Get a hug from Raj', false);
   if (!flies.childElementCount) {
     for (let i = 0; i < 22; i += 1) {
       const fly = document.createElement('span');
@@ -1065,19 +1083,26 @@ function closeHugSky() {
   const sky = document.getElementById('hug-sky');
   if (sky) sky.hidden = true;
   stopHugWatch();
-  const caption = document.getElementById('hug-caption');
-  if (caption) caption.textContent = 'Get a hug from Raj';
+  showHugLine('Get a hug from Raj', false);
 }
 
 function startHeartbeat() {
   document.getElementById('hug-button')?.classList.add('is-beating');
-  if (navigator.vibrate) navigator.vibrate(hugBeatPattern(12));
+  const beat = () => {
+    if (navigator.vibrate) navigator.vibrate(hugBeatPattern(1));
+  };
+  beat();
+  hugPulse = setInterval(beat, 986);
+}
+
+function finishHug() {
+  stopHugWatch();
+  showHugLine('Want one more?, Click meee!!!', true);
 }
 
 async function beginHug() {
-  const caption = document.getElementById('hug-caption');
-  if (!caption || hugListen) return;
-  caption.textContent = 'Put the phone to your chest';
+  if (hugListen) return;
+  showHugLine('Now put the phone to your chest, and see the magic', true);
 
   if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
     try {
@@ -1097,10 +1122,19 @@ async function beginHug() {
       hugTrack = { base: sample, moved: false, stillSince: 0, mark: null, markAt: 0 };
       return;
     }
+    if (hugTrack.holding) {
+      if (!leftChest(hugTrack.rest, sample)) {
+        hugTrack.leaveSince = 0;
+        return;
+      }
+      if (!hugTrack.leaveSince) hugTrack.leaveSince = Date.now();
+      else if (Date.now() - hugTrack.leaveSince >= 500) finishHug();
+      return;
+    }
     const step = nextChestHold(hugTrack, sample, Date.now());
     hugTrack = step.track;
     if (!step.ready) return;
-    stopHugWatch();
+    hugTrack = { holding: true, rest: sample, leaveSince: 0 };
     startHeartbeat();
   };
   window.addEventListener('devicemotion', hugListen);
@@ -1135,6 +1169,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('notepad-hug')?.addEventListener('click', openHugSky);
   document.getElementById('hug-close')?.addEventListener('click', closeHugSky);
   document.getElementById('hug-button')?.addEventListener('click', beginHug);
+  document.getElementById('hug-caption')?.addEventListener('click', beginHug);
 
   // Top right profile icon listener
   document.getElementById('top-profile-btn')?.addEventListener('click', openPortfolioModal);
