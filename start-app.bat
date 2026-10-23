@@ -4,5 +4,5 @@ echo ========================================================
 echo   Starting InternTrack...
 echo ========================================================
 echo.
-node server.js
+node local-server.js
 pause
