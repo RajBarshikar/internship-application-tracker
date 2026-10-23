@@ -21,13 +21,13 @@
   <header class="app-header">
     <div class="header-inner">
       <div class="brand-wrap">
-        <div class="brand-icon-box" title="InternTrack">
+        <button type="button" id="notepad-hug" class="brand-icon-box" title="InternTrack" aria-label="Notepad">
           <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2.2">
             <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
             <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
             <path d="M9 14l2 2 4-4"></path>
           </svg>
-        </div>
+        </button>
         <div class="brand-text">
           <h1>InternTrack</h1>
           <span>Shravani Tilwankar</span>
@@ -459,6 +459,15 @@
 
   <!-- Toast Notification Container -->
   <div id="toast-container" aria-live="polite"></div>
+
+  <div id="hug-sky" class="hug-sky" hidden>
+    <button type="button" id="hug-close" class="hug-close" aria-label="Close">×</button>
+    <div id="hug-fireflies" class="hug-fireflies"></div>
+    <div class="hug-center">
+      <button type="button" id="hug-button" class="hug-button" aria-label="Get a hug from Raj">🤗</button>
+      <p id="hug-caption" class="hug-caption">Get a hug from Raj</p>
+    </div>
+  </div>
 
   <!-- App Scripts. The Groq key stays on the server (Vercel env or local config.js). -->
   <script src="./js/data.js"></script>

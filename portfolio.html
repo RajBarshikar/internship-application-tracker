@@ -203,26 +203,6 @@
       margin: 0 auto 18px auto;
     }
 
-    .back-tracker-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      padding: 6px 12px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-subtle);
-      background-color: var(--bg-surface);
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-
-    .back-tracker-link:hover {
-      background-color: var(--border-subtle);
-      color: var(--text-primary);
-    }
-
     .toast-portfolio {
       position: fixed;
       bottom: 24px;
@@ -262,14 +242,6 @@
       </a>
 
       <div class="portfolio-nav-actions">
-        <!-- Back to Tracker Link -->
-        <a href="./index.html" class="back-tracker-link" title="Open Application Tracker">
-          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-          <span>Tracker</span>
-        </a>
-
         <!-- Share Portfolio Button -->
         <button id="btn-share-portfolio" class="btn btn-primary btn-sm" onclick="sharePortfolio()">
           <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">

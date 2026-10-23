@@ -992,6 +992,120 @@ function sharePortfolioFromApp() {
   }
 }
 
+function hugBeatPattern(beats) {
+  const pattern = [];
+  for (let i = 0; i < beats; i += 1) pattern.push(64, 100, 42, 780);
+  return pattern;
+}
+
+function nextChestHold(track, sample, now) {
+  const dist = Math.hypot(sample.x - track.base.x, sample.y - track.base.y, sample.z - track.base.z);
+  const moved = track.moved || dist > 4.5;
+  let mark = track.mark;
+  let markAt = track.markAt;
+  if (!mark) {
+    mark = sample;
+    markAt = now;
+  }
+  const drift = Math.hypot(sample.x - mark.x, sample.y - mark.y, sample.z - mark.z);
+  if (now - markAt >= 300) {
+    mark = sample;
+    markAt = now;
+  }
+  let stillSince = track.stillSince;
+  if (!moved || drift > 0.6) stillSince = 0;
+  else if (!stillSince) stillSince = now;
+  const ready = Boolean(moved && stillSince && now - stillSince >= 1100);
+  return {
+    track: { base: track.base, moved, mark, markAt, stillSince: ready ? 0 : stillSince },
+    ready
+  };
+}
+
+let hugListen = null;
+let hugTrack = null;
+
+function stopHugWatch() {
+  if (hugListen) {
+    window.removeEventListener('devicemotion', hugListen);
+    hugListen = null;
+  }
+  hugTrack = null;
+  if (navigator.vibrate) navigator.vibrate(0);
+  document.getElementById('hug-button')?.classList.remove('is-beating');
+}
+
+function openHugSky() {
+  const sky = document.getElementById('hug-sky');
+  const flies = document.getElementById('hug-fireflies');
+  const caption = document.getElementById('hug-caption');
+  if (!sky || !flies) return;
+  stopHugWatch();
+  caption.textContent = 'Get a hug from Raj';
+  if (!flies.childElementCount) {
+    for (let i = 0; i < 22; i += 1) {
+      const fly = document.createElement('span');
+      fly.className = 'hug-firefly';
+      const green = i % 3 === 0;
+      fly.style.left = `${Math.random() * 100}%`;
+      fly.style.top = `${Math.random() * 100}%`;
+      fly.style.animationDelay = `${-Math.random() * 8}s`;
+      fly.style.animationDuration = `${7 + Math.random() * 6}s`;
+      if (green) {
+        fly.style.background = '#86efac';
+        fly.style.boxShadow = '0 0 8px 3px rgba(134, 239, 172, 0.8)';
+      }
+      flies.appendChild(fly);
+    }
+  }
+  sky.hidden = false;
+}
+
+function closeHugSky() {
+  const sky = document.getElementById('hug-sky');
+  if (sky) sky.hidden = true;
+  stopHugWatch();
+  const caption = document.getElementById('hug-caption');
+  if (caption) caption.textContent = 'Get a hug from Raj';
+}
+
+function startHeartbeat() {
+  document.getElementById('hug-button')?.classList.add('is-beating');
+  if (navigator.vibrate) navigator.vibrate(hugBeatPattern(12));
+}
+
+async function beginHug() {
+  const caption = document.getElementById('hug-caption');
+  if (!caption || hugListen) return;
+  caption.textContent = 'Put the phone to your chest';
+
+  if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+    try {
+      const answer = await DeviceMotionEvent.requestPermission();
+      if (answer !== 'granted') return;
+    } catch (err) {
+      return;
+    }
+  }
+  if (!window.DeviceMotionEvent) return;
+
+  hugListen = (event) => {
+    const g = event.accelerationIncludingGravity;
+    if (!g || g.x == null) return;
+    const sample = { x: g.x, y: g.y, z: g.z };
+    if (!hugTrack) {
+      hugTrack = { base: sample, moved: false, stillSince: 0, mark: null, markAt: 0 };
+      return;
+    }
+    const step = nextChestHold(hugTrack, sample, Date.now());
+    hugTrack = step.track;
+    if (!step.ready) return;
+    stopHugWatch();
+    startHeartbeat();
+  };
+  window.addEventListener('devicemotion', hugListen);
+}
+
 function copyPortfolioBio() {
   const text = SHRAVANI_PROFILE.about;
   navigator.clipboard.writeText(text).then(() => {
@@ -1018,6 +1132,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('nav-btn-applications')?.addEventListener('click', () => switchTab('applications'));
   document.getElementById('nav-btn-email')?.addEventListener('click', () => switchTab('ai-email'));
   document.getElementById('nav-btn-add')?.addEventListener('click', openAddAppModal);
+  document.getElementById('notepad-hug')?.addEventListener('click', openHugSky);
+  document.getElementById('hug-close')?.addEventListener('click', closeHugSky);
+  document.getElementById('hug-button')?.addEventListener('click', beginHug);
 
   // Top right profile icon listener
   document.getElementById('top-profile-btn')?.addEventListener('click', openPortfolioModal);

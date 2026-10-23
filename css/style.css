@@ -189,6 +189,9 @@ input, select, textarea {
   justify-content: center;
   color: white;
   box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 .brand-text h1 {
@@ -1580,6 +1583,99 @@ input, select, textarea {
   to { opacity: 0; transform: translateY(-8px); }
 }
 
+.hug-sky {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background:
+    radial-gradient(ellipse at 50% 110%, rgba(131, 24, 67, 0.45), transparent 52%),
+    radial-gradient(ellipse at 15% 0%, rgba(30, 58, 138, 0.4), transparent 42%),
+    #070712;
+  overflow: hidden;
+}
+
+.hug-sky[hidden] { display: none; }
+
+.hug-fireflies { position: absolute; inset: 0; }
+
+.hug-firefly {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fde68a;
+  box-shadow: 0 0 8px 3px rgba(253, 230, 138, 0.8);
+  animation: fireflyDrift 8s ease-in-out infinite;
+}
+
+@keyframes fireflyDrift {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.15; }
+  35% { opacity: 1; }
+  55% { transform: translate3d(28px, -46px, 0); opacity: 0.9; }
+  80% { transform: translate3d(-18px, -12px, 0); opacity: 0.35; }
+}
+
+.hug-center {
+  position: relative;
+  z-index: 2;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 24px;
+}
+
+.hug-button {
+  width: 148px;
+  height: 148px;
+  border: none;
+  border-radius: 50%;
+  font-size: 64px;
+  line-height: 1;
+  cursor: pointer;
+  background: radial-gradient(circle at 40% 35%, #fff7ed, #fb7185 46%, #9f1239);
+  box-shadow: 0 0 42px rgba(251, 113, 133, 0.55);
+}
+
+.hug-button.is-beating {
+  animation: hugBeat 0.98s ease-in-out infinite;
+}
+
+@keyframes hugBeat {
+  0%, 100% { transform: scale(1); }
+  12% { transform: scale(1.08); }
+  24% { transform: scale(1); }
+  36% { transform: scale(1.05); }
+  48% { transform: scale(1); }
+}
+
+.hug-caption {
+  margin: 0;
+  color: #fde68a;
+  font-size: 20px;
+  font-weight: 650;
+  text-align: center;
+  text-shadow: 0 0 18px rgba(253, 230, 138, 0.45);
+}
+
+.hug-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 3;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  color: #fde68a;
+  background: transparent;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
 /* Print styles for Portfolio */
 @media print {
   body {
@@ -1587,7 +1683,7 @@ input, select, textarea {
     color: black !important;
     padding: 0 !important;
   }
-  .app-header, .bottom-nav-bar, #toast-container, .modal-backdrop, .btn-modal-close, .pf-quick-actions {
+  .app-header, .bottom-nav-bar, #toast-container, .modal-backdrop, .btn-modal-close, .pf-quick-actions, .hug-sky {
     display: none !important;
   }
   .modal-wrapper {
