@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Get well soon</title>
+  <meta name="theme-color" content="#070712">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: #070712; }
+    body { overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
+
+    .sky {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 110%, rgba(131, 24, 67, 0.45), transparent 52%),
+        radial-gradient(ellipse at 15% 0%, rgba(30, 58, 138, 0.4), transparent 42%),
+        #070712;
+    }
+    .flies { position: absolute; inset: 0; pointer-events: none; }
+    .fly {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #fde68a;
+      box-shadow: 0 0 8px 3px rgba(253, 230, 138, 0.8);
+      animation: drift 8s ease-in-out infinite;
+    }
+    @keyframes drift {
+      0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.15; }
+      35% { opacity: 1; }
+      55% { transform: translate3d(28px, -46px, 0); opacity: 0.9; }
+      80% { transform: translate3d(-18px, -12px, 0); opacity: 0.35; }
+    }
+
+    .stage {
+      position: relative;
+      z-index: 2;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      padding: 28px 20px max(28px, env(safe-area-inset-bottom));
+    }
+
+    .gift, .hug-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+    .gift[hidden], .hug-wrap[hidden], .slider[hidden] { display: none; }
+
+    .bouquet {
+      width: min(78vw, 300px);
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: center 38%;
+      border-radius: 28px;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(253, 230, 138, 0.28);
+    }
+    .wish, .vibes, .hug-caption {
+      margin: 0;
+      max-width: 16em;
+      color: #fde68a;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.15;
+      text-shadow: 0 0 18px rgba(253, 230, 138, 0.45);
+    }
+    .wish { font-size: clamp(40px, 10vw, 56px); }
+    .vibes {
+      max-width: 14em;
+      font-size: clamp(22px, 5.4vw, 28px);
+      line-height: 1.25;
+      color: rgba(253, 230, 138, 0.86);
+    }
+    .hug-caption { font-size: clamp(26px, 7vw, 34px); cursor: pointer; }
+
+    .gift.is-in .bouquet,
+    .gift.is-in .wish,
+    .gift.is-in .vibes,
+    .hug-wrap.is-in .hug-button,
+    .hug-caption.is-in {
+      animation: rise 1.05s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .gift.is-in .wish { animation-delay: 0.12s; }
+    .gift.is-in .vibes { animation-delay: 0.24s; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(24px) scale(0.96); filter: blur(8px); }
+      to { opacity: 1; transform: none; filter: none; }
+    }
+
+    .hug-button {
+      width: 132px;
+      height: 132px;
+      border: none;
+      border-radius: 50%;
+      font-size: 58px;
+      line-height: 1;
+      cursor: pointer;
+      background: radial-gradient(circle at 40% 35%, #fff7ed, #fb7185 46%, #9f1239);
+      box-shadow: 0 0 42px rgba(251, 113, 133, 0.55);
+    }
+    .hug-button.is-beating { animation: beat 0.98s ease-in-out infinite; }
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      12% { transform: scale(1.08); }
+      24% { transform: scale(1); }
+      36% { transform: scale(1.05); }
+      48% { transform: scale(1); }
+    }
+
+    .slider {
+      width: min(86vw, 340px);
+      height: 64px;
+      position: relative;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(253, 230, 138, 0.3);
+      touch-action: none;
+      user-select: none;
+    }
+    .slider-label {
+      position: absolute;
+      inset: 0 16px 0 64px;
+      display: grid;
+      place-items: center;
+      color: rgba(253, 230, 138, 0.9);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-style: italic;
+      font-size: 26px;
+      pointer-events: none;
+    }
+    .knob {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 54px;
+      height: 54px;
+      border: none;
+      border-radius: 50%;
+      cursor: grab;
+      color: #fff7ed;
+      background: radial-gradient(circle at 40% 35%, #fff7ed, #fb7185 55%, #9f1239);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+      display: grid;
+      place-items: center;
+    }
+    .knob:active { cursor: grabbing; }
+    .knob svg { width: 22px; height: 22px; }
+  </style>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"><div class="flies" id="flies"></div></div>
+  <main class="stage">
+    <section id="gift" class="gift" hidden>
+      <img class="bouquet" src="./sunflower.jpg" alt="Sunflowers and baby's breath">
+      <h1 class="wish">Get well soon ❤️</h1>
+      <p class="vibes">Bachaaa sending you good vibes, i wish you recover soon, smile pleaseee</p>
+    </section>
+
+    <div id="hug-wrap" class="hug-wrap" hidden>
+      <button type="button" id="hug-button" class="hug-button" aria-label="Get a hug from Raj">🫂</button>
+      <p id="hug-caption" class="hug-caption">Get a hug from Raj</p>
+    </div>
+
+    <div id="slider" class="slider">
+      <span id="slide-label" class="slider-label">Slide to continue</span>
+      <button type="button" id="slide-knob" class="knob" aria-label="Slide to continue" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+          <path d="M5 12h14"></path>
+          <path d="M13 6l6 6-6 6"></path>
+        </svg>
+      </button>
+    </div>
+  </main>
+  <script>
+    function slideReached(x, max) {
+      return max > 0 && x / max >= 0.85;
+    }
+    console.assert(slideReached(85, 100) === true);
+    console.assert(slideReached(84, 100) === false);
+    console.assert(slideReached(1, 0) === false);
+
+    const flies = document.getElementById('flies');
+    for (let i = 0; i < 22; i += 1) {
+      const fly = document.createElement('span');
+      fly.className = 'fly';
+      fly.style.left = Math.random() * 100 + '%';
+      fly.style.top = Math.random() * 100 + '%';
+      fly.style.animationDelay = -Math.random() * 8 + 's';
+      fly.style.animationDuration = (7 + Math.random() * 6) + 's';
+      if (i % 3 === 0) {
+        fly.style.background = '#86efac';
+        fly.style.boxShadow = '0 0 8px 3px rgba(134, 239, 172, 0.8)';
+      }
+      flies.appendChild(fly);
+    }
+
+    const knob = document.getElementById('slide-knob');
+    const slider = document.getElementById('slider');
+    const label = document.getElementById('slide-label');
+    const gift = document.getElementById('gift');
+    let step = 0;
+    let locked = false;
+    let dragging = false;
+    let startX = 0;
+    let origin = 0;
+    let current = 0;
+
+    function maxTravel() {
+      return slider.clientWidth - knob.offsetWidth - 10;
+    }
+    function setX(x, animate) {
+      current = x;
+      knob.style.transition = animate ? 'transform 0.35s ease' : 'none';
+      knob.style.transform = 'translateX(' + x + 'px)';
+      knob.setAttribute('aria-valuenow', String(Math.round((x / Math.max(maxTravel(), 1)) * 100)));
+    }
+    function reveal(el) {
+      el.hidden = false;
+      const caption = el.querySelector('.hug-caption');
+      if (caption) caption.classList.add('is-in');
+      requestAnimationFrame(function () { el.classList.add('is-in'); });
+    }
+    function finishSlide() {
+      if (locked) return;
+      locked = true;
+      setX(maxTravel(), true);
+      window.setTimeout(function () {
+        if (step === 0) {
+          step = 1;
+          reveal(gift);
+          label.textContent = 'Slide for a hug';
+          knob.setAttribute('aria-label', 'Slide for a hug');
+          setX(0, true);
+          locked = false;
+          return;
+        }
+        slider.hidden = true;
+        reveal(document.getElementById('hug-wrap'));
+      }, 340);
+    }
+
+    knob.addEventListener('pointerdown', function (e) {
+      if (locked) return;
+      dragging = true;
+      try { knob.setPointerCapture(e.pointerId); } catch (err) {}
+      startX = e.clientX;
+      origin = current;
+      knob.style.transition = 'none';
+    });
+    knob.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      setX(Math.min(maxTravel(), Math.max(0, origin + e.clientX - startX)), false);
+    });
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      if (slideReached(current, maxTravel())) finishSlide();
+      else setX(0, true);
+    }
+    knob.addEventListener('pointerup', endDrag);
+    knob.addEventListener('pointercancel', endDrag);
+    knob.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === 'Enter') {
+        e.preventDefault();
+        finishSlide();
+      }
+    });
+
+    function hugBeatPattern(beats) {
+      const pattern = [];
+      for (let i = 0; i < beats; i += 1) pattern.push(64, 100, 42, 780);
+      return pattern;
+    }
+    function nextChestHold(track, sample, now) {
+      const dist = Math.hypot(sample.x - track.base.x, sample.y - track.base.y, sample.z - track.base.z);
+      const moved = track.moved || dist > 4.5;
+      let mark = track.mark;
+      let markAt = track.markAt;
+      if (!mark) { mark = sample; markAt = now; }
+      const drift = Math.hypot(sample.x - mark.x, sample.y - mark.y, sample.z - mark.z);
+      if (now - markAt >= 300) { mark = sample; markAt = now; }
+      let stillSince = track.stillSince;
+      if (!moved || drift > 0.6) stillSince = 0;
+      else if (!stillSince) stillSince = now;
+      const ready = Boolean(moved && stillSince && now - stillSince >= 1100);
+      return {
+        track: { base: track.base, moved: moved, mark: mark, markAt: markAt, stillSince: ready ? 0 : stillSince },
+        ready: ready
+      };
+    }
+    let hugListen = null;
+    let hugTrack = null;
+    let hugPulse = null;
+    function leftChest(rest, sample) {
+      return Math.hypot(sample.x - rest.x, sample.y - rest.y, sample.z - rest.z) > 4.5;
+    }
+    function showHugLine(text) {
+      const caption = document.getElementById('hug-caption');
+      caption.classList.remove('is-in');
+      caption.textContent = text;
+      void caption.offsetWidth;
+      caption.classList.add('is-in');
+    }
+    function stopHugWatch() {
+      if (hugListen) window.removeEventListener('devicemotion', hugListen);
+      hugListen = null;
+      if (hugPulse) clearInterval(hugPulse);
+      hugPulse = null;
+      hugTrack = null;
+      if (navigator.vibrate) navigator.vibrate(0);
+      document.getElementById('hug-button').classList.remove('is-beating');
+    }
+    function startHeartbeat() {
+      const button = document.getElementById('hug-button');
+      button.classList.add('is-beating');
+      const beat = function () { if (navigator.vibrate) navigator.vibrate(hugBeatPattern(1)); };
+      beat();
+      hugPulse = setInterval(beat, 986);
+    }
+    function finishHug() {
+      stopHugWatch();
+      showHugLine('Want one more? Click meee!!!');
+    }
+    async function beginHug() {
+      if (hugListen) return;
+      showHugLine('Now put the phone to your chest, and see the magic');
+      if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+        try {
+          const answer = await DeviceMotionEvent.requestPermission();
+          if (answer !== 'granted') {
+            showHugLine('Allow motion, then tap again');
+            return;
+          }
+        } catch (err) {
+          showHugLine('Could not enable motion sensors');
+          return;
+        }
+      }
+      if (!window.DeviceMotionEvent) {
+        showHugLine('Open this on your phone and hold it to your chest');
+        startHeartbeat();
+        return;
+      }
+      hugListen = function (event) {
+        const g = event.accelerationIncludingGravity;
+        if (!g || g.x == null) return;
+        const sample = { x: g.x, y: g.y, z: g.z };
+        if (!hugTrack) {
+          hugTrack = { base: sample, moved: false, stillSince: 0, mark: null, markAt: 0 };
+          return;
+        }
+        if (hugTrack.holding) {
+          if (!leftChest(hugTrack.rest, sample)) { hugTrack.leaveSince = 0; return; }
+          if (!hugTrack.leaveSince) hugTrack.leaveSince = Date.now();
+          else if (Date.now() - hugTrack.leaveSince >= 500) finishHug();
+          return;
+        }
+        const next = nextChestHold(hugTrack, sample, Date.now());
+        hugTrack = next.track;
+        if (!next.ready) return;
+        hugTrack = { holding: true, rest: sample, leaveSince: 0 };
+        startHeartbeat();
+      };
+      window.addEventListener('devicemotion', hugListen);
+    }
+    document.getElementById('hug-button').addEventListener('click', beginHug);
+    document.getElementById('hug-caption').addEventListener('click', beginHug);
+    window.addEventListener('pagehide', stopHugWatch);
+  </script>
+</body>
+</html>
